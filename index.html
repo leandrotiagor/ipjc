@@ -97,6 +97,31 @@
 
 
 <!-- =========================================
+     CARROSSEL DE VÍDEOS (YOUTUBE)
+========================================= -->
+<section class="videos" id="videos">
+
+    <div class="secao-cabecalho secao-cabecalho-videos">
+        <p class="eyebrow">Direto do nosso canal</p>
+        <h2>Últimos vídeos</h2>
+    </div>
+
+    <div class="videos-carrossel-wrap">
+
+        <button type="button" class="videos-seta videos-seta-esq" id="videosSetaEsq" aria-label="Vídeos anteriores">‹</button>
+
+        <div class="videos-faixa" id="videosFaixa" role="list" aria-live="polite">
+            <p class="videos-carregando" id="videosCarregando">Carregando os últimos vídeos…</p>
+        </div>
+
+        <button type="button" class="videos-seta videos-seta-dir" id="videosSetaDir" aria-label="Próximos vídeos">›</button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
      GRADE DA SEMANA (elemento de assinatura)
 ========================================= -->
 <section class="semana" id="semana">
