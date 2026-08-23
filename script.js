@@ -227,18 +227,42 @@ if (btnMenu && navMobile) {
 
 
 // =========================================
-// DESTAQUE DO DIA ATUAL NA GRADE DE CULTOS
+// DESTAQUE DO DIA ATUAL E DATAS DA SEMANA
 // =========================================
 (function () {
 
     var cards = document.querySelectorAll('.dia-card[data-dia]');
     if (!cards.length) return;
 
-    var hoje = new Date().getDay(); // 0 = domingo ... 6 = sábado
+    var hoje = new Date();
+    var hojeSemana = hoje.getDay(); // 0 = domingo ... 6 = sábado
+
+    // Encontra a segunda-feira desta semana
+    var offsetSegunda = (hojeSemana === 0) ? -6 : (1 - hojeSemana);
+    var segunda = new Date(hoje);
+    segunda.setDate(hoje.getDate() + offsetSegunda);
+
+    function formatarDataCurta(data) {
+        var dia = String(data.getDate()).padStart(2, '0');
+        var mes = String(data.getMonth() + 1).padStart(2, '0');
+        return dia + '/' + mes;
+    }
 
     cards.forEach(function (card) {
-        if (parseInt(card.getAttribute('data-dia'), 10) === hoje) {
+        var diaSemana = parseInt(card.getAttribute('data-dia'), 10);
+
+        if (diaSemana === hojeSemana) {
             card.classList.add('dia-destaque');
+        }
+
+        // Domingo (0) fecha a semana, por isso fica 6 dias depois da segunda
+        var offsetDoDia = (diaSemana === 0) ? 6 : (diaSemana - 1);
+        var dataDoDia = new Date(segunda);
+        dataDoDia.setDate(segunda.getDate() + offsetDoDia);
+
+        var elNumero = card.querySelector('.dia-numero');
+        if (elNumero) {
+            elNumero.textContent = formatarDataCurta(dataDoDia);
         }
     });
 
