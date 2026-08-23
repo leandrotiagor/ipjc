@@ -76,6 +76,18 @@ a{ color: inherit; }
 }
 .pular-conteudo:focus{ left: 12px; top: 12px; }
 
+.oculto-visualmente{
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 :focus-visible{
   outline: 2px solid var(--gold);
   outline-offset: 3px;
@@ -235,28 +247,23 @@ a{ color: inherit; }
 ===================================================== */
 
 .hero{
-  position: relative;
-  background: radial-gradient(ellipse at top left, #4A505D 0%, var(--ink) 55%);
-  color: var(--paper);
-  padding: 110px 24px 130px;
-  overflow: hidden;
+  background: var(--paper);
 }
 
-.hero-glow{
-  position: absolute;
-  width: 640px;
-  height: 640px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(224,184,90,0.28), transparent 70%);
-  top: -220px;
-  right: -160px;
-  pointer-events: none;
+.hero-banner{
+  width: 100%;
+  line-height: 0;
+}
+.hero-banner-img{
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
-.hero-conteudo{
-  position: relative;
+.hero-rodape{
   max-width: 720px;
   margin: 0 auto;
+  padding: 34px 24px 46px;
   text-align: center;
 }
 
@@ -265,7 +272,7 @@ a{ color: inherit; }
   font-size: 13px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--gold-bright);
+  color: var(--wine);
   margin: 0 0 22px;
 }
 
@@ -273,28 +280,12 @@ a{ color: inherit; }
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(224,184,90,0.12);
-  border: 1px solid rgba(224,184,90,0.4);
-  color: var(--gold-bright);
+  background: rgba(199,161,94,0.12);
+  border: 1px solid rgba(199,161,94,0.4);
+  color: var(--wine);
   padding: 9px 18px;
   border-radius: 999px;
   font-weight: 600;
-}
-
-.hero-titulo{
-  font-size: clamp(36px, 6vw, 60px);
-  letter-spacing: -0.01em;
-}
-.hero-titulo em{
-  font-style: italic;
-  color: var(--gold-bright);
-}
-
-.hero-texto{
-  max-width: 520px;
-  margin: 26px auto 0;
-  font-size: 17px;
-  color: rgba(251,247,240,0.78);
 }
 
 .hero-acoes{
@@ -302,9 +293,9 @@ a{ color: inherit; }
   gap: 16px;
   justify-content: center;
   flex-wrap: wrap;
-  margin-top: 38px;
+  margin-top: 22px;
 }
-.hero-acoes .botao-contorno{ color: var(--paper); }
+.hero-acoes .botao-contorno{ color: var(--ink); }
 
 .icone-youtube{
   font-size: 11px;
