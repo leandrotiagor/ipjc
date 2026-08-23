@@ -23,6 +23,25 @@
 <a class="pular-conteudo" href="#inicio">Pular para o conteúdo</a>
 
 <!-- =========================================
+     BARRA DE RÁDIO (fixa no topo)
+========================================= -->
+<div class="barra-radio" id="radio">
+
+    <button type="button" class="radio-play" id="radioPlay" aria-label="Tocar rádio ao vivo">
+        <span class="radio-play-icone" id="radioPlayIcone">▶</span>
+    </button>
+
+    <span class="radio-ponto" aria-hidden="true"></span>
+
+    <p class="radio-texto-barra">No ar 24 horas <span class="radio-texto-barra-sep">·</span> Rádio IPJC</p>
+
+    <audio id="radioAudio" preload="none">
+        <source src="https://radios3.athostech.com.br/listen/ipjc_sede_nacional/radio" type="audio/mpeg">
+    </audio>
+
+</div>
+
+<!-- =========================================
      CABEÇALHO
 ========================================= -->
 <header class="cabecalho" id="topo">
@@ -79,7 +98,7 @@
 
         <div class="hero-acoes">
             <a href="#semana" class="botao botao-ouro">Ver programação da semana</a>
-            <a href="#radio" class="botao botao-contorno">Ouvir a rádio ao vivo</a>
+            <a href="#radio" id="btnOuvirRadioHero" class="botao botao-contorno">Ouvir a rádio ao vivo</a>
             <a href="https://www.youtube.com/channel/UCOEeEDiX1mEMBkSNFkYR6yA" target="_blank" rel="noopener" class="botao botao-contorno">
                 <span class="icone-youtube" aria-hidden="true">▶</span> Assistir no YouTube
             </a>
@@ -238,31 +257,6 @@
             </div>
 
         </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================================
-     RÁDIO
-========================================= -->
-<section class="radio" id="radio">
-
-    <div class="radio-conteudo">
-
-        <p class="eyebrow eyebrow-claro">No ar 24 horas</p>
-        <h2>A Palavra não para — nem de noite, nem de dia</h2>
-        <p class="radio-texto">
-            Nossa rádio online transmite louvor, pregação e momentos de oração
-            o dia inteiro, todos os dias.
-        </p>
-
-        <audio controls class="radio-player" preload="none">
-            <source src="https://radios3.athostech.com.br/listen/ipjc_sede_nacional/radio" type="audio/mpeg">
-            Seu navegador não suporta áudio incorporado.
-            <a href="https://radios3.athostech.com.br/listen/ipjc_sede_nacional/radio">Clique aqui para ouvir</a>.
-        </audio>
 
     </div>
 

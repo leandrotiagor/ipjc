@@ -29,12 +29,75 @@ if (btnMenu && navMobile) {
 
 
 // =========================================
+// RÁDIO FIXA NO TOPO
+// =========================================
+(function () {
+
+    var audio = document.getElementById('radioAudio');
+    var btnPlay = document.getElementById('radioPlay');
+    var iconePlay = document.getElementById('radioPlayIcone');
+    var btnHero = document.getElementById('btnOuvirRadioHero');
+
+    if (!audio || !btnPlay) return;
+
+    function atualizarVisual(tocando) {
+        btnPlay.classList.toggle('tocando', tocando);
+        iconePlay.textContent = tocando ? '❚❚' : '▶';
+        btnPlay.setAttribute('aria-label', tocando ? 'Pausar rádio' : 'Tocar rádio ao vivo');
+    }
+
+    function tocar() {
+        // preload="none": só carrega o stream quando alguém manda tocar
+        if (!audio.src) {
+            var fonte = audio.querySelector('source');
+            if (fonte) audio.src = fonte.src;
+        }
+        var promessa = audio.play();
+        if (promessa !== undefined) {
+            promessa.catch(function () {
+                // Navegador bloqueou o autoplay — comportamento normal e
+                // esperado na primeira visita. O botão fica pronto pra
+                // iniciar com um clique.
+                atualizarVisual(false);
+            });
+        }
+    }
+
+    function alternar() {
+        if (audio.paused) {
+            tocar();
+        } else {
+            audio.pause();
+        }
+    }
+
+    audio.addEventListener('play', function () { atualizarVisual(true); });
+    audio.addEventListener('pause', function () { atualizarVisual(false); });
+
+    btnPlay.addEventListener('click', alternar);
+
+    if (btnHero) {
+        btnHero.addEventListener('click', function (e) {
+            e.preventDefault();
+            alternar();
+        });
+    }
+
+    // Tenta iniciar sozinho assim que a página carrega.
+    window.addEventListener('load', tocar);
+
+})();
+
+
+// =========================================
 // CARROSSEL DE VÍDEOS DO YOUTUBE (via RSS)
 // =========================================
 (function () {
 
     var CANAL_ID = 'UCOEeEDiX1mEMBkSNFkYR6yA'; // canal oficial da IPJC
     var MAX_VIDEOS = 12;
+    var HORA_INICIO_MANHA = 5;  // inclusive
+    var HORA_FIM_MANHA = 12;    // exclusivo (ou seja, até 11h59)
 
     var faixa = document.getElementById('videosFaixa');
     if (!faixa) return;
@@ -52,12 +115,24 @@ if (btnMenu && navMobile) {
         })
         .then(function (dados) {
             if (!dados.items || !dados.items.length) throw new Error('Feed vazio');
-            montarCarrossel(dados.items.slice(0, MAX_VIDEOS));
+
+            var itensManha = dados.items.filter(function (item) {
+                return foiPublicadoDeManha(item.pubDate);
+            });
+
+            if (!itensManha.length) throw new Error('Nenhum vídeo da manhã encontrado no feed');
+
+            return prepararCandidatos(itensManha);
+        })
+        .then(function (candidatosValidos) {
+            var validos = candidatosValidos.filter(Boolean).slice(0, MAX_VIDEOS);
+            if (!validos.length) throw new Error('Nenhum vídeo horizontal da manhã encontrado');
+            montarCarrossel(validos);
         })
         .catch(function (erro) {
             console.error('Não foi possível carregar os vídeos do YouTube:', erro);
-            faixa.innerHTML = '<p class="videos-erro">Não foi possível carregar os vídeos agora. ' +
-                '<a href="https://www.youtube.com/channel/' + CANAL_ID + '" target="_blank" rel="noopener">Veja no YouTube</a>.</p>';
+            faixa.innerHTML = '<p class="videos-erro">Não encontramos vídeos da manhã pra mostrar agora. ' +
+                '<a href="https://www.youtube.com/channel/' + CANAL_ID + '" target="_blank" rel="noopener">Veja todos no YouTube</a>.</p>';
             if (setaEsq) setaEsq.style.display = 'none';
             if (setaDir) setaDir.style.display = 'none';
         });
@@ -81,32 +156,73 @@ if (btnMenu && navMobile) {
         }
     }
 
-    function montarCarrossel(itens) {
-        faixa.innerHTML = '';
+    // Usa o horário de publicação no YouTube (convertido pro horário de Brasília)
+    // como aproximação de "vídeo feito de manhã" — o feed RSS não informa o
+    // horário real do culto, só quando o vídeo foi publicado no canal.
+    function foiPublicadoDeManha(pubDate) {
+        try {
+            var d = new Date(pubDate);
+            var horaBrasilia = new Date(
+                d.toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' })
+            ).getHours();
+            return horaBrasilia >= HORA_INICIO_MANHA && horaBrasilia < HORA_FIM_MANHA;
+        } catch (e) {
+            return false;
+        }
+    }
 
-        itens.forEach(function (item) {
+    // Carrega a miniatura antes de decidir se entra no carrossel — descarta
+    // qualquer thumbnail vertical (Shorts) ou que falhe ao carregar.
+    function prepararCandidatos(itens) {
+        var promessas = itens.map(function (item) {
             var videoId = extrairVideoId(item);
-            if (!videoId) return;
+            if (!videoId) return Promise.resolve(null);
 
             var thumb = (item.thumbnail && item.thumbnail.trim())
                 ? item.thumbnail
                 : 'https://i.ytimg.com/vi/' + videoId + '/hqdefault.jpg';
 
+            return checarThumbHorizontal(thumb).then(function (horizontal) {
+                if (!horizontal) return null;
+                return { item: item, videoId: videoId, thumb: thumb };
+            });
+        });
+
+        return Promise.all(promessas);
+    }
+
+    function checarThumbHorizontal(url) {
+        return new Promise(function (resolve) {
+            var img = new Image();
+            img.onload = function () {
+                resolve(img.naturalWidth >= img.naturalHeight);
+            };
+            img.onerror = function () {
+                resolve(false);
+            };
+            img.src = url;
+        });
+    }
+
+    function montarCarrossel(candidatos) {
+        faixa.innerHTML = '';
+
+        candidatos.forEach(function (c) {
             var card = document.createElement('a');
             card.className = 'video-card';
-            card.href = 'https://www.youtube.com/watch?v=' + videoId;
+            card.href = 'https://www.youtube.com/watch?v=' + c.videoId;
             card.target = '_blank';
             card.rel = 'noopener';
             card.setAttribute('role', 'listitem');
 
             card.innerHTML =
                 '<div class="video-card-thumb">' +
-                    '<img src="' + thumb + '" alt="" loading="lazy">' +
+                    '<img src="' + c.thumb + '" alt="" loading="lazy">' +
                     '<div class="video-card-play"><span>▶</span></div>' +
                 '</div>' +
                 '<div class="video-card-corpo">' +
-                    '<p class="video-card-titulo">' + escaparHtml(item.title || '') + '</p>' +
-                    '<p class="video-card-data">' + formatarData(item.pubDate) + '</p>' +
+                    '<p class="video-card-titulo">' + escaparHtml(c.item.title || '') + '</p>' +
+                    '<p class="video-card-data">' + formatarData(c.item.pubDate) + '</p>' +
                 '</div>';
 
             faixa.appendChild(card);

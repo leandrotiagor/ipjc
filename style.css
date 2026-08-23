@@ -144,12 +144,81 @@ a{ color: inherit; }
 
 
 /* =====================================================
+   BARRA DE RÁDIO (fixa no topo)
+===================================================== */
+
+.barra-radio{
+  position: sticky;
+  top: 0;
+  z-index: 210;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0 16px;
+}
+
+.radio-play{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: none;
+  background: var(--gold);
+  color: var(--ink);
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 0;
+}
+.radio-play-icone{
+  font-size: 9px;
+  transform: translateX(1px);
+}
+.radio-play.tocando .radio-play-icone{ transform: none; }
+
+.radio-ponto{
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #E05A5A;
+  flex-shrink: 0;
+  animation: pulsar-radio 1.8s ease-in-out infinite;
+}
+@keyframes pulsar-radio{
+  0%, 100%{ opacity: 1; }
+  50%{ opacity: 0.35; }
+}
+
+.radio-texto-barra{
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(251,247,240,0.85);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.radio-texto-barra-sep{ color: var(--gold-bright); margin: 0 2px; }
+
+@media (max-width: 480px){
+  .radio-texto-barra{ font-size: 10.5px; }
+}
+
+
+/* =====================================================
    CABEÇALHO
 ===================================================== */
 
 .cabecalho{
   position: sticky;
-  top: 0;
+  top: 34px;
   z-index: 200;
 }
 
@@ -584,26 +653,6 @@ a{ color: inherit; }
 
 @media (max-width: 800px){
   .historia-grade{ grid-template-columns: 1fr; }
-}
-
-
-/* =====================================================
-   RÁDIO
-===================================================== */
-
-.radio{
-  background: var(--ink);
-  color: var(--paper);
-  padding: 90px 24px;
-  text-align: center;
-}
-.radio-conteudo{ max-width: 620px; margin: 0 auto; }
-.radio h2{ font-size: clamp(26px, 4vw, 34px); margin: 14px 0 18px; }
-.radio-texto{ color: rgba(251,247,240,0.72); margin-bottom: 30px; }
-
-.radio-player{
-  width: 100%;
-  max-width: 460px;
 }
 
 
