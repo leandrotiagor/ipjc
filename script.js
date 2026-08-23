@@ -96,8 +96,6 @@ if (btnMenu && navMobile) {
 
     var CANAL_ID = 'UCOEeEDiX1mEMBkSNFkYR6yA'; // canal oficial da IPJC
     var MAX_VIDEOS = 12;
-    var HORA_INICIO_MANHA = 5;  // inclusive
-    var HORA_FIM_MANHA = 12;    // exclusivo (ou seja, até 11h59)
 
     var faixa = document.getElementById('videosFaixa');
     if (!faixa) return;
@@ -116,22 +114,16 @@ if (btnMenu && navMobile) {
         .then(function (dados) {
             if (!dados.items || !dados.items.length) throw new Error('Feed vazio');
 
-            var itensManha = dados.items.filter(function (item) {
-                return foiPublicadoDeManha(item.pubDate);
-            });
-
-            if (!itensManha.length) throw new Error('Nenhum vídeo da manhã encontrado no feed');
-
-            return prepararCandidatos(itensManha);
+            return prepararCandidatos(dados.items);
         })
         .then(function (candidatosValidos) {
             var validos = candidatosValidos.filter(Boolean).slice(0, MAX_VIDEOS);
-            if (!validos.length) throw new Error('Nenhum vídeo horizontal da manhã encontrado');
+            if (!validos.length) throw new Error('Nenhum vídeo horizontal encontrado');
             montarCarrossel(validos);
         })
         .catch(function (erro) {
             console.error('Não foi possível carregar os vídeos do YouTube:', erro);
-            faixa.innerHTML = '<p class="videos-erro">Não encontramos vídeos da manhã pra mostrar agora. ' +
+            faixa.innerHTML = '<p class="videos-erro">Não encontramos vídeos pra mostrar agora. ' +
                 '<a href="https://www.youtube.com/channel/' + CANAL_ID + '" target="_blank" rel="noopener">Veja todos no YouTube</a>.</p>';
             if (setaEsq) setaEsq.style.display = 'none';
             if (setaDir) setaDir.style.display = 'none';
@@ -153,21 +145,6 @@ if (btnMenu && navMobile) {
             return d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' });
         } catch (e) {
             return '';
-        }
-    }
-
-    // Usa o horário de publicação no YouTube (convertido pro horário de Brasília)
-    // como aproximação de "vídeo feito de manhã" — o feed RSS não informa o
-    // horário real do culto, só quando o vídeo foi publicado no canal.
-    function foiPublicadoDeManha(pubDate) {
-        try {
-            var d = new Date(pubDate);
-            var horaBrasilia = new Date(
-                d.toLocaleString('en-US', { timeZone: 'America/Sao_Paulo' })
-            ).getHours();
-            return horaBrasilia >= HORA_INICIO_MANHA && horaBrasilia < HORA_FIM_MANHA;
-        } catch (e) {
-            return false;
         }
     }
 
