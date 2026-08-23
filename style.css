@@ -249,6 +249,18 @@ a{ color: inherit; }
   margin: 0 0 22px;
 }
 
+.hero-eyebrow-destaque{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(224,184,90,0.12);
+  border: 1px solid rgba(224,184,90,0.4);
+  color: var(--gold-bright);
+  padding: 9px 18px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
 .hero-titulo{
   font-size: clamp(36px, 6vw, 60px);
   letter-spacing: -0.01em;
@@ -273,6 +285,11 @@ a{ color: inherit; }
   margin-top: 38px;
 }
 .hero-acoes .botao-contorno{ color: var(--paper); }
+
+.icone-youtube{
+  font-size: 11px;
+  transform: translateY(-1px);
+}
 
 
 /* =====================================================
