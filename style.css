@@ -371,6 +371,11 @@ a{ color: inherit; }
   transform: translateY(-1px);
 }
 
+.icone-whatsapp{
+  font-size: 13px;
+  transform: translateY(-1px);
+}
+
 
 /* =====================================================
    CARROSSEL DE VÍDEOS (YOUTUBE)
