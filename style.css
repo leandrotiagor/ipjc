@@ -1,4 +1,17 @@
 /* =====================================================
+   FONTE CUSTOMIZADA — CANCUN
+===================================================== */
+
+@font-face{
+  font-family: 'Cancun';
+  src: url('cancun.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+/* =====================================================
    TOKENS
 ===================================================== */
 
@@ -15,6 +28,7 @@
   --linha: rgba(58,63,75,0.08);
 
   --serif: 'Fraunces', serif;
+  --titulo: 'Cancun', 'Fraunces', serif;
   --sans: 'Inter', sans-serif;
   --mono: 'IBM Plex Mono', monospace;
 }
@@ -36,7 +50,13 @@ body{
   line-height: 1.55;
 }
 
-h1, h2, h3{
+h1, h2{
+  font-family: var(--titulo);
+  font-weight: 400;
+  margin: 0;
+  line-height: 1.15;
+}
+h3{
   font-family: var(--serif);
   font-weight: 600;
   margin: 0;
