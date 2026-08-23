@@ -3,16 +3,16 @@
 ===================================================== */
 
 :root{
-  --ink: #171A21;
-  --ink-soft: #2B2F3A;
-  --paper: #FBF7F0;
-  --paper-warm: #F3ECDD;
-  --gold: #C89B3C;
-  --gold-bright: #E0B85A;
-  --wine: #6B2737;
-  --stone: #6B6558;
-  --stone-light: #948C7C;
-  --linha: rgba(23,26,33,0.1);
+  --ink: #3A3F4B;
+  --ink-soft: #4E5460;
+  --paper: #FDFCFA;
+  --paper-warm: #F7F3EA;
+  --gold: #C7A15E;
+  --gold-bright: #D6B679;
+  --wine: #93495A;
+  --stone: #83796B;
+  --stone-light: #A69E90;
+  --linha: rgba(58,63,75,0.08);
 
   --serif: 'Fraunces', serif;
   --sans: 'Inter', sans-serif;
@@ -101,7 +101,7 @@ a{ color: inherit; }
 .botao-ouro{
   background: linear-gradient(135deg, var(--gold-bright), var(--gold));
   color: var(--ink);
-  box-shadow: 0 8px 24px rgba(200,155,60,0.35);
+  box-shadow: 0 6px 18px rgba(199,161,94,0.22);
 }
 
 .botao-contorno{
@@ -122,7 +122,7 @@ a{ color: inherit; }
 }
 
 .cabecalho-faixa{
-  background: rgba(23,26,33,0.92);
+  background: rgba(58,63,75,0.90);
   backdrop-filter: blur(8px);
 }
 
@@ -216,7 +216,7 @@ a{ color: inherit; }
 
 .hero{
   position: relative;
-  background: radial-gradient(ellipse at top left, #232838 0%, var(--ink) 55%);
+  background: radial-gradient(ellipse at top left, #4A505D 0%, var(--ink) 55%);
   color: var(--paper);
   padding: 110px 24px 130px;
   overflow: hidden;
@@ -512,7 +512,7 @@ a{ color: inherit; }
 ===================================================== */
 
 .contribua{
-  background: linear-gradient(135deg, var(--wine), #4A1B26);
+  background: linear-gradient(135deg, var(--wine), #7A3C4A);
   color: var(--paper);
   padding: 90px 24px 60px;
   text-align: center;
