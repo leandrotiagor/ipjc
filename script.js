@@ -224,3 +224,22 @@ if (btnMenu && navMobile) {
     }
 
 })();
+
+
+// =========================================
+// DESTAQUE DO DIA ATUAL NA GRADE DE CULTOS
+// =========================================
+(function () {
+
+    var cards = document.querySelectorAll('.dia-card[data-dia]');
+    if (!cards.length) return;
+
+    var hoje = new Date().getDay(); // 0 = domingo ... 6 = sábado
+
+    cards.forEach(function (card) {
+        if (parseInt(card.getAttribute('data-dia'), 10) === hoje) {
+            card.classList.add('dia-destaque');
+        }
+    });
+
+})();
