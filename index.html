@@ -57,6 +57,7 @@
 
             <nav class="nav-principal" aria-label="Navegação principal">
                 <a href="#semana">Cultos</a>
+                <a href="#escala">Escala</a>
                 <a href="#historia">Nossa história</a>
                 <a href="#midia">Mídia</a>
                 <a href="#contribua">Contribua</a>
@@ -72,6 +73,7 @@
 
     <nav class="nav-mobile" id="navMobile" aria-label="Navegação móvel">
         <a href="#semana">Cultos</a>
+        <a href="#escala">Escala</a>
         <a href="#historia">Nossa história</a>
         <a href="#midia">Mídia</a>
         <a href="#contribua">Contribua</a>
@@ -244,6 +246,23 @@
     </div>
 
     <p class="semana-nota">Horários sujeitos a alteração em datas comemorativas — confirme pelo WhatsApp.</p>
+
+</section>
+
+
+<!-- =========================================
+     ESCALA DA SEMANA (dados dinâmicos)
+========================================= -->
+<section class="escala-publica" id="escala">
+
+    <div class="secao-cabecalho">
+        <p class="eyebrow">Quem serve nesta semana</p>
+        <h2>Escala de cultos</h2>
+    </div>
+
+    <div id="listaEscalaPublica" class="escala-lista">
+        <p class="escala-vazia">Carregando escala...</p>
+    </div>
 
 </section>
 
@@ -495,6 +514,7 @@
 
         <nav class="rodape-nav" aria-label="Navegação do rodapé">
             <a href="#semana">Cultos</a>
+            <a href="#escala">Escala</a>
             <a href="#historia">Nossa história</a>
             <a href="#midia">Mídia</a>
             <a href="#contato">Contato</a>
@@ -507,6 +527,8 @@
 </footer>
 
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="escala.js"></script>
 <script src="script.js"></script>
 
 </body>
