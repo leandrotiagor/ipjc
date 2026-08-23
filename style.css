@@ -142,6 +142,20 @@ a{ color: inherit; }
   color: inherit;
 }
 
+.botao-whatsapp{
+  background: #25D366;
+  border-color: #25D366;
+  color: #fff;
+}
+.botao-whatsapp:hover{ background: #1FBF5C; border-color: #1FBF5C; }
+
+.botao-youtube{
+  background: #E5423A;
+  border-color: #E5423A;
+  color: #fff;
+}
+.botao-youtube:hover{ background: #D3372F; border-color: #D3372F; }
+
 
 /* =====================================================
    BARRA DE RÁDIO (fixa no topo)
@@ -377,6 +391,8 @@ a{ color: inherit; }
   margin-top: 22px;
 }
 .hero-acoes .botao-contorno{ color: var(--ink); }
+.hero-acoes .botao-whatsapp,
+.hero-acoes .botao-youtube{ color: #fff; }
 
 .icone-youtube{
   font-size: 11px;
