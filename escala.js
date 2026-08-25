@@ -78,21 +78,29 @@ async function carregarEscalaPublica() {
 
             card.querySelector('.escala-dia-semana').textContent = escala.dia_semana || '';
             card.querySelector('.escala-data-numero').textContent = formatarDataEscala(escala.data);
-            card.querySelector('.escala-tipo').textContent = escala.tipo_culto || 'Culto';
             card.querySelector('.escala-turno').textContent = escala.turno || '';
 
             const pessoas = card.querySelector('.escala-pessoas');
 
-            if (escala.abertura) {
-                const linha = document.createElement('span');
-                linha.textContent = `Abertura: ${escala.abertura}`;
-                pessoas.appendChild(linha);
-            }
+            if (escala.texto_especial) {
 
-            if (escala.mensagem) {
-                const linha = document.createElement('span');
-                linha.textContent = `Mensagem: ${escala.mensagem}`;
-                pessoas.appendChild(linha);
+                card.querySelector('.escala-tipo').textContent = escala.texto_especial;
+
+            } else {
+
+                card.querySelector('.escala-tipo').textContent = escala.tipo_culto || 'Culto';
+
+                if (escala.abertura) {
+                    const linha = document.createElement('span');
+                    linha.textContent = `Abertura: ${escala.abertura}`;
+                    pessoas.appendChild(linha);
+                }
+
+                if (escala.mensagem) {
+                    const linha = document.createElement('span');
+                    linha.textContent = `Mensagem: ${escala.mensagem}`;
+                    pessoas.appendChild(linha);
+                }
             }
 
             lista.appendChild(card);
